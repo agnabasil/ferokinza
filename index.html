@@ -264,12 +264,23 @@ a.detail-v:hover{color:var(--rust)}
 .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:18px}
 /* dial code beside the number; stacks when the column is too narrow for both */
 .phone-row{display:grid;grid-template-columns:1fr;gap:10px}
-@media (min-width:400px){.phone-row{grid-template-columns:minmax(0,104px) minmax(0,1fr)}}
+@media (min-width:400px){.phone-row{grid-template-columns:minmax(0,100px) minmax(0,1fr)}}
 /* Emoji font last: listing it first makes it supply the digits too, which
    renders them widely spaced. Archivo has no flag glyphs, so the browser
    falls back for those characters on its own. Windows shows the two
    letters instead of a flag, which still reads fine. */
-.phone-row select{font-family:var(--sans),'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji'}
+.phone-row select{font-family:var(--sans),'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji';
+  /* The native arrow reserves ~26px of its own on top of padding, which
+     forces the control wider than the content needs. Drawing the chevron
+     ourselves reclaims that space. Vertical padding stays 13px so the height
+     still matches the number field beside it. */
+  appearance:none;-webkit-appearance:none;
+  padding:13px 26px 13px 10px;
+  background-color:var(--cream);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%235A6E70' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 9px center;
+  background-size:11px 8px}
 label{display:block}
 .lbl{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sand);margin-bottom:8px}
 input,textarea,select{width:100%;padding:13px 14px;border:1px solid var(--field);background:var(--cream);font-size:15px;line-height:1.55;color:var(--ink);border-radius:2px;outline:none;transition:border-color .15s ease}
