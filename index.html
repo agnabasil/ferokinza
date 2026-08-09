@@ -327,9 +327,13 @@ input[aria-invalid="true"],textarea[aria-invalid="true"],select[aria-invalid="tr
 .reveal.done{will-change:auto}
 /* Direction variants, applied by JS. .reveal.in wins on specificity, so each
    of these settles back to no transform. */
-.reveal-left{transform:translate3d(-26px,0,0)}
-.reveal-right{transform:translate3d(26px,0,0)}
 .reveal-zoom{transform:scale(.97)}
+/* Sideways drift only where the layout is actually side by side. Below this
+   the columns stack, and an off-screen X offset would widen the page. */
+@media (min-width:800px){
+  .reveal-left{transform:translate3d(-26px,0,0)}
+  .reveal-right{transform:translate3d(26px,0,0)}
+}
 
 /* Slow drift on the market photographs as they pass through the viewport.
    Scroll-driven, so it costs no JavaScript and simply does not run where
