@@ -99,7 +99,10 @@ input,textarea,select,button{font:inherit}
       transition:max-height .36s cubic-bezier(.4,0,.2,1),opacity .24s ease,padding .36s cubic-bezier(.4,0,.2,1),visibility 0s linear .36s}
 .menu.open{visibility:visible;max-height:480px;opacity:1;padding:14px clamp(14px,4vw,44px) 22px;border-top-width:1px;transition-delay:0s}
 .menu a{padding:13px 2px;font-size:16px;font-weight:500;color:#2C4A50;border-bottom:1px solid #EFE4D4}
-.menu .btn{margin-top:14px;padding:15px 22px;font-size:15px;border-bottom:none}
+/* `.menu a` outranks `.btn-solid`, so the CTA needs its colour restating here
+   or the label renders dark-on-teal and disappears. */
+.menu .btn{margin-top:14px;padding:15px 22px;font-size:15px;border-bottom:none;color:var(--cream)}
+.menu .btn:hover{color:#FFF}
 @media (max-width:999px){
   .nav,.hdr-cta{display:none}
   .burger{display:flex}
