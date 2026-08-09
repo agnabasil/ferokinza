@@ -325,6 +325,47 @@ input[aria-invalid="true"],textarea[aria-invalid="true"],select[aria-invalid="tr
         transition-delay:var(--d,0ms)}
 .reveal.in{opacity:1;transform:none}
 .reveal.done{will-change:auto}
+/* Direction variants, applied by JS. .reveal.in wins on specificity, so each
+   of these settles back to no transform. */
+.reveal-left{transform:translate3d(-26px,0,0)}
+.reveal-right{transform:translate3d(26px,0,0)}
+.reveal-zoom{transform:scale(.97)}
+
+/* Slow drift on the market photographs as they pass through the viewport.
+   Scroll-driven, so it costs no JavaScript and simply does not run where
+   unsupported. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .strip figure img{
+      animation:fkDrift linear both;
+      animation-timeline:view();
+      animation-range:entry 0% exit 100%;
+    }
+    @keyframes fkDrift{
+      from{transform:translateY(-2.2%) scale(1.07)}
+      to{transform:translateY(2.2%) scale(1.07)}
+    }
+  }
+}
+
+/* ---------- back to top ---------- */
+.to-top{
+  position:fixed;z-index:60;
+  right:clamp(14px,2.5vw,28px);
+  bottom:calc(clamp(14px,2.5vw,28px) + env(safe-area-inset-bottom,0px));
+  width:46px;height:46px;display:grid;place-items:center;
+  background:var(--teal);color:var(--cream);
+  border:1px solid rgba(250,246,240,.2);border-radius:2px;cursor:pointer;
+  box-shadow:0 14px 32px -16px rgba(16,51,60,.7);
+  opacity:0;visibility:hidden;transform:translateY(12px);
+  transition:opacity .3s ease,transform .3s cubic-bezier(.22,.61,.36,1),
+             background .2s ease,visibility 0s linear .3s;
+}
+.to-top.show{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.to-top.hidden-by-menu{opacity:0;visibility:hidden;transform:translateY(12px)}
+.to-top:hover{background:var(--rust)}
+.to-top:active{transform:translateY(1px)}
+.to-top svg{width:17px;height:17px;display:block}
 
 /* header settles onto the page once you scroll off the hero */
 .hdr{transition:box-shadow .3s ease,background-color .3s ease}
@@ -340,13 +381,13 @@ input[aria-invalid="true"],textarea[aria-invalid="true"],select[aria-invalid="tr
   .btn:active{transform:translateY(0)}
   .card:hover,.sector:hover,.market:hover{transform:translateY(-3px)}
   .sector-cta:hover .go span{transform:translateX(5px)}
-  .hero-frame:hover img,.feature-media:hover img,.strip figure:hover img{transform:scale(1.045)}
+  .hero-frame:hover img,.feature-media:hover img{transform:scale(1.045)}
   .detail-v:hover{transform:translateX(2px)}
 }
 .btn{transition:background .2s ease,color .2s ease,border-color .2s ease,transform .2s cubic-bezier(.22,.61,.36,1),box-shadow .2s ease}
 .card,.sector,.market{transition:background .25s ease,transform .3s cubic-bezier(.22,.61,.36,1)}
 .sector-cta .go span{display:inline-block;transition:transform .25s cubic-bezier(.22,.61,.36,1)}
-.hero-frame img,.feature-media img,.strip figure img{transition:transform .7s cubic-bezier(.22,.61,.36,1)}
+.hero-frame img,.feature-media img{transition:transform .7s cubic-bezier(.22,.61,.36,1)}
 .feature-media,.strip figure{overflow:hidden}
 .detail-v{display:inline-block;transition:color .2s ease,transform .2s ease}
 
@@ -923,6 +964,12 @@ details[open] summary .q{color:var(--rust)}
   </div>
 </footer>
 
+<button class="to-top" id="to-top" type="button" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M12 19V5M5 12l7-7 7 7"/>
+  </svg>
+</button>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -988,6 +1035,17 @@ details[open] summary .q{color:var(--rust)}
       groups.set(el.parentNode, n + 1);
       el.style.setProperty('--d', Math.min(n, 7) * 70 + 'ms');
       el.classList.add('reveal');
+
+      // Panels sitting in the right-hand column drift in from the side, images
+      // settle out of a slight zoom. Everything else keeps the default rise.
+      if (el.matches('.strip figure, .feature')) {
+        el.classList.add('reveal-zoom');
+      } else if (el.matches('.panel, .stack-dark > div, .docs > div, .sup-grid > div')) {
+        el.classList.add('reveal-right');
+      } else if (el.matches('.eyebrow, .h2')) {
+        el.classList.add('reveal-left');
+      }
+
       targets.push(el);
     });
 
@@ -1015,21 +1073,31 @@ details[open] summary .q{color:var(--rust)}
     }, 2500);
   }
 
-  // ---- Header state on scroll -------------------------------------------
+  // ---- Header state and back-to-top, on one scroll listener --------------
   var hdr = document.querySelector('.hdr');
+  var toTop = document.getElementById('to-top');
   var ticking = false;
 
   function onScroll() {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(function () {
-      hdr.classList.toggle('scrolled', window.scrollY > 24);
+      var y = window.scrollY;
+      hdr.classList.toggle('scrolled', y > 24);
+      toTop.classList.toggle('show', y > 700);
       ticking = false;
     });
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  toTop.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+    // Send focus back to the top of the page, not just the viewport.
+    var brand = document.querySelector('.brand');
+    if (brand) brand.focus({ preventScroll: true });
+  });
 
   // Mobile menu
   var burger = document.getElementById('burger');
@@ -1039,6 +1107,8 @@ details[open] summary .q{color:var(--rust)}
     menu.classList.toggle('open', open);
     burger.setAttribute('aria-expanded', String(open));
     burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    // Keep the floating button out of the way of an open menu on short screens.
+    toTop.classList.toggle('hidden-by-menu', open);
   }
 
   burger.addEventListener('click', function () {
