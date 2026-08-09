@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;family=Archivo:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  html { scroll-behavior: smooth; scroll-padding-top: 92px; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: #FAF6F0; color: #10333C; font-family: Archivo, system-ui, sans-serif; text-wrap: pretty; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #24596B; text-decoration: none; }
+  a:hover { color: #B85C38; }
+  summary::-webkit-details-marker { display: none; }
+  summary::marker { content: ''; }
+  summary { list-style: none; cursor: pointer; }
+  input, textarea, button { font-family: inherit; }
+  @keyframes fkRise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @keyframes fkFade { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#FAF6F0">
+
+  <header style="position:sticky;top:0;z-index:50;background:rgba(250,246,240,.88);backdrop-filter:blur(12px);border-bottom:1px solid #E6DACA">
+    <div style="max-width:1280px;margin:0 auto;padding:0 clamp(14px,4vw,44px);min-height:76px;display:flex;align-items:center;gap:clamp(12px,2vw,28px)">
+      <a href="#top" style="display:flex;align-items:center;gap:12px;flex:0 0 auto">
+        <img src="assets/ferokinza-emblem.png" alt="FEROKINZA emblem" style="width:42px;height:42px;object-fit:cover;border-radius:50%;mix-blend-mode:multiply">
+        <span style="display:flex;flex-direction:column;line-height:1">
+          <span style="font-family:'Source Serif 4',serif;font-weight:700;font-size:20px;letter-spacing:.06em;color:#1D4A57">FEROKINZA</span>
+          <span style="font-size:8.5px;font-weight:600;letter-spacing:.2em;color:#7C8B88;margin-top:4px">EXPORT AND IMPORT COMPANY</span>
+        </span>
+      </a>
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+        <nav style="margin-left:auto;display:flex;align-items:center;gap:clamp(14px,1.8vw,30px);font-size:14px;font-weight:500;color:#2C4A50;white-space:nowrap">
+          <a href="#services" style="color:#2C4A50" style-hover="color:#B85C38">Services</a>
+          <a href="#sectors" style="color:#2C4A50" style-hover="color:#B85C38">What we source</a>
+          <a href="#process" style="color:#2C4A50" style-hover="color:#B85C38">How it works</a>
+          <a href="#logistics" style="color:#2C4A50" style-hover="color:#B85C38">Logistics</a>
+          <a href="#faq" style="color:#2C4A50" style-hover="color:#B85C38">FAQ</a>
+        </nav>
+        <a href="#contact" onClick="{{ tabRfq }}" style="flex:0 0 auto;background:#1D4A57;color:#FAF6F0;padding:12px 22px;border-radius:2px;font-size:13.5px;font-weight:600;letter-spacing:.02em;white-space:nowrap;transition:background .2s ease" style-hover="background:#B85C38;color:#FFF">Request a quotation</a>
+      </sc-if>
+      <sc-if value="{{ narrow }}">
+        <button type="button" onClick="{{ toggleMenu }}" aria-label="Menu" style="margin-left:auto;flex:0 0 auto;width:46px;height:46px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;background:none;border:1px solid #D6C4AB;border-radius:2px;cursor:pointer">
+          <span style="display:block;width:20px;height:1.5px;background:#1D4A57"></span>
+          <span style="display:block;width:20px;height:1.5px;background:#1D4A57"></span>
+          <span style="display:block;width:20px;height:1.5px;background:#1D4A57"></span>
+        </button>
+      </sc-if>
+    </div>
+    <sc-if value="{{ menuOpen }}">
+      <div style="border-top:1px solid #E6DACA;background:#FAF6F0;padding:14px clamp(14px,4vw,44px) 22px;display:grid;gap:2px">
+        <a href="#services" onClick="{{ closeMenu }}" style="padding:13px 2px;font-size:16px;font-weight:500;color:#2C4A50;border-bottom:1px solid #EFE4D4">Services</a>
+        <a href="#sectors" onClick="{{ closeMenu }}" style="padding:13px 2px;font-size:16px;font-weight:500;color:#2C4A50;border-bottom:1px solid #EFE4D4">What we source</a>
+        <a href="#process" onClick="{{ closeMenu }}" style="padding:13px 2px;font-size:16px;font-weight:500;color:#2C4A50;border-bottom:1px solid #EFE4D4">How it works</a>
+        <a href="#logistics" onClick="{{ closeMenu }}" style="padding:13px 2px;font-size:16px;font-weight:500;color:#2C4A50;border-bottom:1px solid #EFE4D4">Logistics</a>
+        <a href="#faq" onClick="{{ closeMenu }}" style="padding:13px 2px;font-size:16px;font-weight:500;color:#2C4A50;border-bottom:1px solid #EFE4D4">FAQ</a>
+        <a href="#contact" onClick="{{ closeMenu }}" style="margin-top:14px;text-align:center;background:#1D4A57;color:#FAF6F0;padding:15px 22px;border-radius:2px;font-size:15px;font-weight:600">Request a quotation</a>
+      </div>
+    </sc-if>
+  </header>
+
+  <section id="top" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#EDE1D1 0%,#F3EADD 100%)">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,7vw,104px) clamp(18px,4vw,44px) clamp(48px,6vw,88px);display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:clamp(32px,5vw,72px);align-items:center">
+      <div style="animation:fkRise .9s cubic-bezier(.2,.7,.3,1) both">
+        <div style="display:inline-flex;align-items:center;gap:10px;border:1px solid #C9B79E;border-radius:100px;padding:7px 15px;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#7A5A3C;margin-bottom:28px">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: rgb(184, 92, 56);"></span>
+          EuropEan&nbsp; Sourcing - Global Impact</div>
+        <h1 style="margin:0;font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(40px,5.6vw,74px);line-height:1.02;letter-spacing:-.025em;color:#10333C">From European sourcing to global supply</h1>
+        <p style="margin:18px 0 0;font-family:'Source Serif 4',serif;font-size:clamp(19px,1.9vw,26px);font-style:italic;line-height:1.3;color:#7A5A3C">We source, you grow.</p>
+        <p style="margin:26px 0 0;max-width:36em;font-size:clamp(16px,1.35vw,19px);line-height:1.62;color:#3C5257">FEROKINZA EXPORT &amp; IMPORT is an Italy-based sourcing, procurement and export company. We connect businesses worldwide with reliable European products and supply solutions - a small batch of spare parts, a pallet of chocolate, or a full-container project. No order is too small.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:36px">
+          <a href="#contact" onClick="{{ tabRfq }}" style="background:#1D4A57;color:#FAF6F0;padding:16px 30px;border-radius:2px;font-size:15px;font-weight:600;transition:background .2s ease" style-hover="background:#B85C38;color:#FFF">Send us your requirement</a>
+          <a href="#sectors" style="border:1px solid #1D4A57;color:#1D4A57;padding:16px 30px;border-radius:2px;font-size:15px;font-weight:600;transition:all .2s ease" style-hover="background:#1D4A57;color:#FAF6F0">See what we source</a>
+        </div>
+        <p style="margin:30px 0 0;font-size:12.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#8A7B68">EUROPE · GCC · INDIA · ASIA · AUSTRALIA&nbsp;· AFRICA · CHINA · USA</p>
+      </div>
+      <div style="position:relative;animation:fkFade 1.2s ease .2s both">
+        <div style="position:relative;aspect-ratio:4/3.4;border-radius:3px;overflow:hidden;box-shadow:0 30px 70px -30px rgba(16,51,60,.45)">
+          <image-slot id="fk-hero" shape="rect" placeholder="Hero image — European warehouse, port or product photography"></image-slot>
+        </div>
+        <div style="margin-top:18px;background:#FAF6F0;border:1px solid #E0D2BE;padding:18px 24px;display:flex;align-items:baseline;gap:18px;box-shadow:0 18px 40px -24px rgba(16,51,60,.35)">
+          <div style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:700;color:#1D4A57;line-height:1;flex:0 0 auto">Small batches</div>
+          <div style="font-size:13px;line-height:1.45;color:#5A6E70">Welcome here. Small businesses get the same service as container buyers.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{ showStats }}" hint-placeholder-val="{{ true }}">
+    <section style="background:#1D4A57;color:#EDE1D1">
+      <div style="max-width:1280px;margin:0 auto;padding:clamp(36px,4vw,54px) clamp(18px,4vw,44px);display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:clamp(24px,3vw,40px)">
+        <div>
+          <div style="font-family:'Source Serif 4',serif;font-size:clamp(30px,3.4vw,44px);font-weight:600;line-height:1;color:#FAF6F0">Small batches</div>
+          <div style="font-size:13.5px;line-height:1.5;color:#A8C0C6;margin-top:10px">Welcome, right up to full-container shipments</div>
+        </div>
+        <div>
+          <div style="font-family:'Source Serif 4',serif;font-size:clamp(30px,3.4vw,44px);font-weight:600;line-height:1;color:#FAF6F0">17</div>
+          <div style="font-size:13.5px;line-height:1.5;color:#A8C0C6;margin-top:10px">Product categories and industry sectors covered</div>
+        </div>
+        <div>
+          <div style="font-family:'Source Serif 4',serif;font-size:clamp(30px,3.4vw,44px);font-weight:600;line-height:1;color:#FAF6F0">8</div>
+          <div style="font-size:13.5px;line-height:1.5;color:#A8C0C6;margin-top:10px">Market regions: Europe, UK, GCC, India, Asia, Australia, Africa, China, USA</div>
+        </div>
+        <div>
+          <div style="font-family:'Source Serif 4',serif;font-size:clamp(30px,3.4vw,44px);font-weight:600;line-height:1;color:#FAF6F0">1</div>
+          <div style="font-size:13.5px;line-height:1.5;color:#A8C0C6;margin-top:10px">Procurement partner handling sourcing through delivery</div>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <section id="services" style="padding:clamp(72px,8vw,124px) clamp(18px,4vw,44px)">
+    <div style="max-width:1280px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,4vw,64px);align-items:start">
+        <div>
+          <div style="font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#B85C38;margin-bottom:18px">What we do</div>
+          <h2 style="margin:0;font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(30px,3.8vw,50px);line-height:1.08;letter-spacing:-.02em;color:#10333C">European sourcing, handled end to end</h2>
+        </div>
+        <div>
+          <p style="margin:0;font-size:clamp(15.5px,1.2vw,17.5px);line-height:1.68;color:#3C5257">
+            Our core specialization is European sourcing. We work with manufacturers, brands, distributors and specialized suppliers across different sectors to identify and procure genuine products according to each customer's technical, commercial and quantity requirements.
+          </p>
+          <p style="margin:18px 0 0;font-size:clamp(15.5px,1.2vw,17.5px);line-height:1.68;color:#3C5257">Dedicated procurement teams manage the work from first enquiry to delivered goods - so a buyer in Dubai, Singapore, Lagos or Houston deals with one partner instead of a dozen suppliers.</p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1px;background:#E6DACA;border:1px solid #E6DACA;margin-top:clamp(44px,5vw,72px)">
+        <div style="background:#FAF6F0;padding:clamp(28px,3vw,40px);transition:background .25s ease" style-hover="background:#FFFDFA">
+          <div style="font-family:'Source Serif 4',serif;font-size:15px;font-weight:700;color:#B85C38;letter-spacing:.04em">01</div>
+          <h3 style="margin:14px 0 10px;font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:#10333C;line-height:1.2">Product identification</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.6;color:#5A6E70">Send a part number, a datasheet, a brand name or even a photograph. We identify exactly what the product is and who makes it.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:clamp(28px,3vw,40px);transition:background .25s ease" style-hover="background:#FFFDFA">
+          <div style="font-family:'Source Serif 4',serif;font-size:15px;font-weight:700;color:#B85C38;letter-spacing:.04em">02</div>
+          <h3 style="margin:14px 0 10px;font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:#10333C;line-height:1.2">Supplier sourcing</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.6;color:#5A6E70">We approach manufacturers, authorised distributors and specialised suppliers across Europe, and trusted sources in other markets where that serves you better.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:clamp(28px,3vw,40px);transition:background .25s ease" style-hover="background:#FFFDFA">
+          <div style="font-family:'Source Serif 4',serif;font-size:15px;font-weight:700;color:#B85C38;letter-spacing:.04em">03</div>
+          <h3 style="margin:14px 0 10px;font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:#10333C;line-height:1.2">Alternative solutions</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.6;color:#5A6E70">If an item is discontinued, restricted or simply too expensive, we propose technically equivalent alternatives instead of returning an empty answer.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:clamp(28px,3vw,40px);transition:background .25s ease" style-hover="background:#FFFDFA">
+          <div style="font-family:'Source Serif 4',serif;font-size:15px;font-weight:700;color:#B85C38;letter-spacing:.04em">04</div>
+          <h3 style="margin:14px 0 10px;font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:#10333C;line-height:1.2">Quotation</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.6;color:#5A6E70">A clear offer with product references, quantities, lead time and your chosen Incoterm — for a small batch or for a full project list.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:clamp(28px,3vw,40px);transition:background .25s ease" style-hover="background:#FFFDFA">
+          <div style="font-family:'Source Serif 4',serif;font-size:15px;font-weight:700;color:#B85C38;letter-spacing:.04em">05</div>
+          <h3 style="margin:14px 0 10px;font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:#10333C;line-height:1.2">Procurement coordination</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.6;color:#5A6E70">Purchase orders, production and dispatch follow-up, consolidation of multiple suppliers, and the export documentation that travels with the goods.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:clamp(28px,3vw,40px);transition:background .25s ease" style-hover="background:#FFFDFA">
+          <div style="font-family:'Source Serif 4',serif;font-size:15px;font-weight:700;color:#B85C38;letter-spacing:.04em">06</div>
+          <h3 style="margin:14px 0 10px;font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:#10333C;line-height:1.2">International delivery</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.6;color:#5A6E70">Courier, air freight, LCL groupage or full container - matched to the size of the order rather than the other way round.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#10333C;color:#EDE1D1;padding:clamp(72px,8vw,124px) clamp(18px,4vw,44px)">
+    <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(36px,5vw,80px);align-items:center">
+      <div>
+        <div style="font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#D98D63;margin-bottom:18px">Why FEROKINZA</div>
+        <h2 style="margin:0;font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(30px,3.8vw,50px);line-height:1.1;letter-spacing:-.02em;color:#FAF6F0">Most exporters start at a container. We start at a small batch.</h2>
+        <p style="margin:26px 0 0;font-size:clamp(15.5px,1.2vw,17.5px);line-height:1.68;color:#B5CBD1;max-width:38em">Small and mid-sized buyers are usually turned away by European suppliers: minimums are too high, single orders are not worth the paperwork, and nobody answers a request for a handful of spare parts. That is exactly the gap we work in. Whether a customer needs a small batch of specialized components or large-volume industrial supplies, we aim to provide the same level of accuracy, responsiveness, reliability and professional service - because every customer and every order matters.</p>
+      </div>
+      <div style="display:grid;gap:1px;background:rgba(237,225,209,.16);border:1px solid rgba(237,225,209,.16)">
+        <div style="background:#143C46;padding:26px clamp(22px,2.4vw,32px)">
+          <div style="font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#D98D63;margin-bottom:12px">Dedicated team</div>
+          <h3 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;color:#FAF6F0">A desk built for small batches</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.6;color:#9FB8BF">A specialised team works only on small procurement orders - the requests larger exporters push to the back of the queue. It is where our strength lies, so these enquiries are answered, quoted and moved without the usual delay.</p>
+        </div>
+        <div style="background:#10333C;padding:26px clamp(22px,2.4vw,32px)">
+          <h3 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;color:#FAF6F0">No minimum barrier</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.6;color:#9FB8BF">A small batch, a pallet or a full container - the enquiry is handled the same way.</p>
+        </div>
+        <div style="background:#10333C;padding:26px clamp(22px,2.4vw,32px)">
+          <h3 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;color:#FAF6F0">Genuine, traceable product</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.6;color:#9FB8BF">We buy from manufacturers, brands, authorised distributors and specialised suppliers, with the supporting documentation.</p>
+        </div>
+        <div style="background:#10333C;padding:26px clamp(22px,2.4vw,32px)">
+          <h3 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;color:#FAF6F0">European base, global reading</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.6;color:#9FB8BF">Sourcing expertise in Europe combined with practical business experience in the UK, GCC, India, Asia, Australia, Africa, China and the USA.</p>
+        </div>
+        <div style="background:#10333C;padding:26px clamp(22px,2.4vw,32px)">
+          <h3 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;color:#FAF6F0">One point of contact</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.6;color:#9FB8BF">Multiple suppliers, one purchase order, one shipment, one invoice, one person to call.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sectors" style="padding:clamp(72px,8vw,124px) clamp(18px,4vw,44px)">
+    <div style="max-width:1280px;margin:0 auto">
+      <div style="display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:24px">
+        <div style="max-width:640px">
+          <div style="font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#B85C38;margin-bottom:18px">What we source</div>
+          <h2 style="margin:0;font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(30px,3.8vw,50px);line-height:1.08;letter-spacing:-.02em;color:#10333C">Industrial supply, infrastructure, Food and everything between</h2>
+        </div>
+        <p style="margin:0;max-width:34em;font-size:15.5px;line-height:1.65;color:#5A6E70">FEROKINZA supports procurement across a broad range of industries and product categories. If your requirement is not listed, send it anyway - sourcing unusual items is part of the work.</p>
+      </div>
+
+      <div style="margin-top:clamp(40px,4.5vw,64px);background:#EDE1D1;border:1px solid #DFCFB8;padding:clamp(28px,3.4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,3.5vw,56px);align-items:center">
+        <div>
+          <div style="display:inline-block;background:#B85C38;color:#FFF;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:6px 12px;margin-bottom:20px">Particular expertise</div>
+          <h3 style="margin:0;font-family:'Source Serif 4',serif;font-size:clamp(26px,2.8vw,38px);font-weight:600;line-height:1.12;color:#10333C">Multi-supplier European consolidation</h3>
+          <p style="margin:16px 0 22px;font-size:15.5px;line-height:1.65;color:#4A5F62;max-width:34em">Buying small quantities from five European suppliers usually means five orders, five freight bills and five sets of paperwork. We place the orders, collect the goods in Europe and ship them to you as one consignment, on one invoice, with one set of export documents.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <span style="border:1px solid #C9B79E;background:#F6EEE3;padding:8px 14px;font-size:13px;color:#4A5F62">One purchase order</span>
+            <span style="border:1px solid #C9B79E;background:#F6EEE3;padding:8px 14px;font-size:13px;color:#4A5F62">Goods collected across Europe</span>
+            <span style="border:1px solid #C9B79E;background:#F6EEE3;padding:8px 14px;font-size:13px;color:#4A5F62">Combined into one shipment</span>
+            <span style="border:1px solid #C9B79E;background:#F6EEE3;padding:8px 14px;font-size:13px;color:#4A5F62">Single export document set</span>
+            <span style="border:1px solid #C9B79E;background:#F6EEE3;padding:8px 14px;font-size:13px;color:#4A5F62">Lower freight per item</span>
+            <span style="border:1px solid #C9B79E;background:#F6EEE3;padding:8px 14px;font-size:13px;color:#4A5F62">One customs clearance</span>
+            <span style="border:1px solid #C9B79E;background:#F6EEE3;padding:8px 14px;font-size:13px;color:#4A5F62">Mixed categories in one load</span>
+            <span style="border:1px solid #C9B79E;background:#F6EEE3;padding:8px 14px;font-size:13px;color:#4A5F62">LCL or full container</span>
+          </div>
+        </div>
+        <div style="position:relative;aspect-ratio:4/3;box-shadow:0 24px 50px -30px rgba(16,51,60,.5)">
+          <image-slot id="fk-food" shape="rect" placeholder="Image — consolidated pallets, cartons or loading bay"></image-slot>
+        </div>
+      </div>
+
+      <div style="margin-top:clamp(28px,3vw,44px);display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1px;background:#E6DACA;border:1px solid #E6DACA">
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Food &amp; beverage</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Chocolate, confectionery, premium and luxury brands, beverages, packaged foods, ingredients, snacks and specialty foods.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Electrical &amp; automation</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Switchgear, drives, PLCs, sensors, controls, cables and panel components.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Industrial &amp; mechanical</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Pumps, motors, bearings, gearboxes, hydraulics, pneumatics and machinery parts.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Plumbing &amp; sanitary</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Valves, fittings, piping systems, sanitaryware and bathroom products.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Water treatment</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Filtration, dosing, membranes, treatment plant equipment and consumables.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Construction materials</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Finishes, fixings, tools, site equipment and specified building products.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Healthcare &amp; hospital</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Medical consumables, equipment, furniture and hospital supplies.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Hotel &amp; hospitality</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Guest room supplies, kitchen equipment, tableware, linen and amenities.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Automotive &amp; marine</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Components, spares and workshop supplies for vehicles and vessels.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Oil &amp; gas equipment</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Instrumentation, flow control, fittings and field maintenance items.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Manufacturing &amp; packaging</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Production line parts, packaging machinery, materials and consumables.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Safety equipment</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">PPE, fire safety, site protection and workplace safety products.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Agricultural products</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Farm inputs, equipment, irrigation and post-harvest supplies.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Energy solutions</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Generation, distribution, storage and efficiency equipment.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">OEM parts</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Original components sourced against drawings, codes or sample parts.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Maintenance (MRO)</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Recurring maintenance, repair and operations requirements.</p>
+        </div>
+        <div style="background:#FAF6F0;padding:24px 26px;transition:background .2s ease" style-hover="background:#EDE1D1">
+          <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#10333C">Project requirements</h4>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A6E70">Complete BOQ and specialized project lists procured as one package.</p>
+        </div>
+        <a href="#contact" onClick="{{ tabRfq }}" style="background:#1D4A57;padding:24px 26px;display:flex;flex-direction:column;justify-content:space-between;gap:16px;transition:background .2s ease" style-hover="background:#B85C38">
+          <div>
+            <h4 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:18.5px;font-weight:600;color:#FAF6F0">Can't Find Your Category?</h4>
+            <p style="margin:0;font-size:13.5px;line-height:1.55;color:#C5D6DA">Tell us what you need. Our global procurement team will source it for you.</p>
+          </div>
+          <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#FAF6F0">Request a quotation <span style="font-size:15px">→</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="process" style="background:#EDE1D1;padding:clamp(72px,8vw,124px) clamp(18px,4vw,44px)">
+    <div style="max-width:1280px;margin:0 auto">
+      <div style="font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#B85C38;margin-bottom:18px">How it works</div>
+      <h2 style="margin:0 0 clamp(40px,4.5vw,64px);font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(30px,3.8vw,50px);line-height:1.08;letter-spacing:-.02em;color:#10333C;max-width:16em">Five steps from your enquiry to delivered goods</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(20px,2.4vw,32px)">
+        <div style="border-top:2px solid #1D4A57;padding-top:22px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;color:#B85C38;margin-bottom:12px">STEP 01</div>
+          <h3 style="margin:0 0 10px;font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#10333C;line-height:1.2">You send the requirement</h3>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#5A6E70">A list, a part number, a brand, a photo or a rough description. Any quantity.</p>
+        </div>
+        <div style="border-top:2px solid #1D4A57;padding-top:22px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;color:#B85C38;margin-bottom:12px">STEP 02</div>
+          <h3 style="margin:0 0 10px;font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#10333C;line-height:1.2">We source and confirm</h3>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#5A6E70">We identify the product, find the supplier, and come back with alternatives where they make sense.</p>
+        </div>
+        <div style="border-top:2px solid #1D4A57;padding-top:22px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;color:#B85C38;margin-bottom:12px">STEP 03</div>
+          <h3 style="margin:0 0 10px;font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#10333C;line-height:1.2">You receive a quotation</h3>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#5A6E70">Prices, lead times, packing details and the Incoterm you want to buy on.</p>
+        </div>
+        <div style="border-top:2px solid #1D4A57;padding-top:22px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;color:#B85C38;margin-bottom:12px">STEP 04</div>
+          <h3 style="margin:0 0 10px;font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#10333C;line-height:1.2">We procure and consolidate</h3>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#5A6E70">Orders placed, production followed up, goods inspected on receipt and consolidated for shipment.</p>
+        </div>
+        <div style="border-top:2px solid #1D4A57;padding-top:22px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;color:#B85C38;margin-bottom:12px">STEP 05</div>
+          <h3 style="margin:0 0 10px;font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#10333C;line-height:1.2">We export and deliver</h3>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#5A6E70">Export documentation prepared, freight booked, and the shipment tracked to your destination.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{ showIncoterms }}" hint-placeholder-val="{{ true }}">
+    <section id="logistics" style="padding:clamp(72px,8vw,124px) clamp(18px,4vw,44px)">
+      <div style="max-width:1280px;margin:0 auto">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,4vw,64px);align-items:start">
+          <div>
+            <div style="font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#B85C38;margin-bottom:18px">Logistics &amp; terms</div>
+            <h2 style="margin:0;font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(30px,3.8vw,50px);line-height:1.08;letter-spacing:-.02em;color:#10333C">Shipped the way the order deserves</h2>
+            <p style="margin:22px 0 0;font-size:15.5px;line-height:1.68;color:#3C5257;max-width:34em">A two-kilo parcel should not wait for a container, and a container should not be broken into parcels. We quote the freight mode that fits the consignment, and we can consolidate goods from several European suppliers into a single shipment.</p>
+            <div style="display:grid;gap:14px;margin-top:32px">
+              <div style="display:flex;gap:14px;align-items:baseline"><span style="font-size:11px;font-weight:700;letter-spacing:.14em;color:#B85C38;min-width:78px">COURIER</span><span style="font-size:14.5px;line-height:1.55;color:#4A5F62">Express door-to-door via <b>DHL</b>, <b>FedEx</b> and <b>UPS</b> for samples, spares and urgent small items</span></div>
+              <div style="display:flex;gap:14px;align-items:baseline"><span style="font-size:11px;font-weight:700;letter-spacing:.14em;color:#B85C38;min-width:78px">AIR</span><span style="font-size:14.5px;line-height:1.55;color:#4A5F62">Time-critical cargo and high-value components</span></div>
+              <div style="display:flex;gap:14px;align-items:baseline"><span style="font-size:11px;font-weight:700;letter-spacing:.14em;color:#B85C38;min-width:78px">SEA LCL</span><span style="font-size:14.5px;line-height:1.55;color:#4A5F62">Groupage for part loads - the practical route for smaller buyers</span></div>
+              <div style="display:flex;gap:14px;align-items:baseline"><span style="font-size:11px;font-weight:700;letter-spacing:.14em;color:#B85C38;min-width:78px">SEA FCL</span><span style="font-size:14.5px;line-height:1.55;color:#4A5F62">Full containers, including mixed loads and project consignments</span></div>
+              <div style="display:flex;gap:14px;align-items:baseline"><span style="font-size:11px;font-weight:700;letter-spacing:.14em;color:#B85C38;min-width:78px">ROAD</span><span style="font-size:14.5px;line-height:1.55;color:#4A5F62">Within Europe and to onward loading ports</span></div>
+            </div>
+          </div>
+          <div style="border:1px solid #E6DACA;background:#FFFDFA">
+            <div style="padding:22px clamp(20px,2.4vw,30px);border-bottom:1px solid #E6DACA">
+              <div style="font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;color:#10333C">Incoterms we quote on</div>
+              <div style="font-size:13px;color:#7A8B8C;margin-top:6px">Incoterms® 2020 — tell us which one suits your import setup</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:#E6DACA">
+              <div style="background:#FFFDFA;padding:18px clamp(20px,2.4vw,30px)"><div style="font-family:'Source Serif 4',serif;font-size:17px;font-weight:700;color:#1D4A57">EXW</div><div style="font-size:13px;color:#5A6E70;margin-top:4px">Ex Works, collected at supplier</div></div>
+              <div style="background:#FFFDFA;padding:18px clamp(20px,2.4vw,30px)"><div style="font-family:'Source Serif 4',serif;font-size:17px;font-weight:700;color:#1D4A57">FCA</div><div style="font-size:13px;color:#5A6E70;margin-top:4px">Free Carrier, handed to your forwarder</div></div>
+              <div style="background:#FFFDFA;padding:18px clamp(20px,2.4vw,30px)"><div style="font-family:'Source Serif 4',serif;font-size:17px;font-weight:700;color:#1D4A57">FOB</div><div style="font-size:13px;color:#5A6E70;margin-top:4px">Free On Board at the European port</div></div>
+              <div style="background:#FFFDFA;padding:18px clamp(20px,2.4vw,30px)"><div style="font-family:'Source Serif 4',serif;font-size:17px;font-weight:700;color:#1D4A57">CIF</div><div style="font-size:13px;color:#5A6E70;margin-top:4px">Cost, Insurance and Freight to your port</div></div>
+              <div style="background:#FFFDFA;padding:18px clamp(20px,2.4vw,30px)"><div style="font-family:'Source Serif 4',serif;font-size:17px;font-weight:700;color:#1D4A57">CIP</div><div style="font-size:13px;color:#5A6E70;margin-top:4px">Carriage and Insurance Paid to destination</div></div>
+              <div style="background:#FFFDFA;padding:18px clamp(20px,2.4vw,30px)"><div style="font-family:'Source Serif 4',serif;font-size:17px;font-weight:700;color:#1D4A57">DAP / DDP</div><div style="font-size:13px;color:#5A6E70;margin-top:4px">Delivered to your address, duties optional</div></div>
+            </div>
+            <div style="padding:20px clamp(20px,2.4vw,30px);border-top:1px solid #E6DACA;font-size:13.5px;line-height:1.6;color:#5A6E70">
+              Availability of a given term depends on the supplier, product and destination. We confirm it in writing with every quotation.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <section id="documentation" style="background:#1D4A57;color:#EDE1D1;padding:clamp(72px,8vw,124px) clamp(18px,4vw,44px)">
+    <div style="max-width:1280px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,4vw,64px);align-items:start">
+        <div>
+          <div style="font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#D98D63;margin-bottom:18px">Compliance &amp; documentation</div>
+          <h2 style="margin:0;font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(30px,3.8vw,50px);line-height:1.08;letter-spacing:-.02em;color:#FAF6F0">Paperwork that clears customs the first time</h2>
+          <p style="margin:22px 0 0;font-size:15.5px;line-height:1.68;color:#B5CBD1;max-width:34em">Goods leaving the European Union travel on their documents. We collect the required paperwork from the supplier and prepare the export set for your destination, so your clearing agent is not chasing a missing certificate at the port.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:rgba(237,225,209,.18);border:1px solid rgba(237,225,209,.18)">
+          <div style="background:#1D4A57;padding:22px 24px"><h4 style="margin:0 0 6px;font-size:15px;font-weight:600;color:#FAF6F0">Commercial invoice &amp; packing list</h4><p style="margin:0;font-size:13px;line-height:1.55;color:#9FB8BF">Prepared to your import requirements, with HS codes.</p></div>
+          <div style="background:#1D4A57;padding:22px 24px"><h4 style="margin:0 0 6px;font-size:15px;font-weight:600;color:#FAF6F0">Certificate of Origin / EUR.1</h4><p style="margin:0;font-size:13px;line-height:1.55;color:#9FB8BF">Where the destination or a trade agreement calls for it.</p></div>
+          <div style="background:#1D4A57;padding:22px 24px"><h4 style="margin:0 0 6px;font-size:15px;font-weight:600;color:#FAF6F0">CE marking &amp; declarations</h4><p style="margin:0;font-size:13px;line-height:1.55;color:#9FB8BF">Manufacturer conformity documents for regulated products.</p></div>
+          <div style="background:#1D4A57;padding:22px 24px"><h4 style="margin:0 0 6px;font-size:15px;font-weight:600;color:#FAF6F0">Food safety documents</h4><p style="margin:0;font-size:13px;line-height:1.55;color:#9FB8BF">Health certificates, HACCP and food-grade declarations for F&amp;B consignments.</p></div>
+          <div style="background:#1D4A57;padding:22px 24px"><h4 style="margin:0 0 6px;font-size:15px;font-weight:600;color:#FAF6F0">Technical datasheets &amp; MSDS</h4><p style="margin:0;font-size:13px;line-height:1.55;color:#9FB8BF">Specification and safety data supplied with the goods.</p></div>
+          <div style="background:#1D4A57;padding:22px 24px"><h4 style="margin:0 0 6px;font-size:15px;font-weight:600;color:#FAF6F0">Transport &amp; insurance</h4><p style="margin:0;font-size:13px;line-height:1.55;color:#9FB8BF">Bill of lading or air waybill and insurance certificate as per your Incoterm.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="markets" style="padding:clamp(72px,8vw,124px) clamp(18px,4vw,44px)">
+    <div style="max-width:1280px;margin:0 auto">
+      <div style="font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#B85C38;margin-bottom:18px">Markets</div>
+      <h2 style="margin:0 0 18px;font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(30px,3.8vw,50px);line-height:1.08;letter-spacing:-.02em;color:#10333C;max-width:17em">A European base with an international operating network</h2>
+      <p style="margin:0 0 clamp(36px,4vw,56px);max-width:44em;font-size:15.5px;line-height:1.68;color:#3C5257">Sourcing runs from Italy and across Europe. Our commercial experience sits in the markets that buy from Europe - which is what makes the specification, documentation and delivery expectations land correctly at both ends.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:#E6DACA;border:1px solid #E6DACA">
+        <div style="background:#FAF6F0;padding:28px 26px"><div style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#10333C">Europe</div><div style="font-size:13.5px;line-height:1.55;color:#5A6E70;margin-top:8px">Sourcing base - manufacturers, brands and distributors</div></div>
+        <div style="background:#FAF6F0;padding:28px 26px"><div style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#10333C">GCC</div><div style="font-size:13.5px;line-height:1.55;color:#5A6E70;margin-top:8px">Established business and procurement experience</div></div>
+        <div style="background:#FAF6F0;padding:28px 26px"><div style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#10333C">India</div><div style="font-size:13.5px;line-height:1.55;color:#5A6E70;margin-top:8px">Long-standing commercial relationships</div></div>
+        <div style="background:#FAF6F0;padding:28px 26px"><div style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#10333C">Asia</div><div style="font-size:13.5px;line-height:1.55;color:#5A6E70;margin-top:8px">Buying and alternative sourcing markets</div></div>
+        <div style="background:#FAF6F0;padding:28px 26px"><div style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#10333C">Australia</div><div style="font-size:13.5px;line-height:1.55;color:#5A6E70;margin-top:8px">Import demand for European products</div></div>
+        <div style="background:#FAF6F0;padding:28px 26px"><div style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#10333C">Africa</div><div style="font-size:13.5px;line-height:1.55;color:#5A6E70;margin-top:8px">Project and trading supply requirements</div></div>
+        <div style="background:#FAF6F0;padding:28px 26px"><div style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#10333C">China</div><div style="font-size:13.5px;line-height:1.55;color:#5A6E70;margin-top:8px">Manufacturing and alternative sourcing</div></div>
+        <div style="background:#FAF6F0;padding:28px 26px"><div style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#10333C">USA</div><div style="font-size:13.5px;line-height:1.55;color:#5A6E70;margin-top:8px">Including successfully completed projects</div></div>
+      </div>
+      <div style="margin-top:clamp(28px,3vw,44px);display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(14px,1.6vw,22px)">
+        <div style="position:relative;aspect-ratio:3/2"><image-slot id="fk-net-1" shape="rect" placeholder="Port / container terminal"></image-slot></div>
+        <div style="position:relative;aspect-ratio:3/2"><image-slot id="fk-net-2" shape="rect" placeholder="Warehouse / consolidation"></image-slot></div>
+        <div style="position:relative;aspect-ratio:3/2"><image-slot id="fk-net-3" shape="rect" placeholder="Industrial or manufacturing detail"></image-slot></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="suppliers" style="background:#EDE1D1;padding:clamp(72px,8vw,124px) clamp(18px,4vw,44px)">
+    <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,4vw,64px);align-items:start">
+      <div>
+        <div style="font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#B85C38;margin-bottom:18px">For suppliers &amp; brands</div>
+        <h2 style="margin:0;font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(30px,3.8vw,50px);line-height:1.08;letter-spacing:-.02em;color:#10333C">European manufacturers: we open the markets that buy from you</h2>
+        <p style="margin:22px 0 0;font-size:15.5px;line-height:1.68;color:#4A5F62;max-width:34em">FEROKINZA is developing relationships and collaborations with European brands, manufacturers, distributors and specialized suppliers. If you make or distribute in Europe and want demand from the GCC, India, Asia, Australia, Africa, China and the USA without building an export desk of your own, we are the buyer on your side of the invoice.</p>
+        <a href="#contact" style="display:inline-block;margin-top:30px;border:1px solid #1D4A57;color:#1D4A57;padding:15px 28px;border-radius:2px;font-size:14.5px;font-weight:600;transition:all .2s ease" style-hover="background:#1D4A57;color:#FAF6F0">Talk to us about supplying</a>
+      </div>
+      <div style="display:grid;gap:1px;background:#DFCFB8;border:1px solid #DFCFB8">
+        <div style="background:#F6EEE3;padding:24px clamp(22px,2.4vw,30px)">
+          <h3 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;color:#10333C">You sell in Europe, we handle the rest</h3>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#5A6E70">Domestic terms, domestic paperwork. Export documentation, freight and the overseas customer relationship sit with us.</p>
+        </div>
+        <div style="background:#F6EEE3;padding:24px clamp(22px,2.4vw,30px)">
+          <h3 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;color:#10333C">Access without an agent network</h3>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#5A6E70">Our commercial experience in the GCC, India, Asia, Australia, Africa, China and the USA puts your products in front of buyers you would otherwise reach through distributors alone.</p>
+        </div>
+        <div style="background:#F6EEE3;padding:24px clamp(22px,2.4vw,30px)">
+          <h3 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;color:#10333C">Any order size is worth taking</h3>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#5A6E70">We aggregate small enquiries into consolidated orders, so low-volume export demand becomes commercially sensible for you.</p>
+        </div>
+        <div style="background:#F6EEE3;padding:24px clamp(22px,2.4vw,30px)">
+          <h3 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;color:#10333C">Your brand, correctly represented</h3>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#5A6E70">We buy genuine product with full documentation and quote it as you specify it — no substitutions made behind your back.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="vision" style="background:#10333C;color:#EDE1D1;padding:clamp(72px,8vw,124px) clamp(18px,4vw,44px)">
+    <div style="max-width:1280px;margin:0 auto">
+      <div style="font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#D98D63;margin-bottom:24px">Our vision</div>
+      <p style="margin:0;max-width:19em;font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(28px,3.6vw,48px);line-height:1.14;letter-spacing:-.02em;color:#FAF6F0">One trusted partner between European supply and global demand.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(24px,3vw,44px);margin-top:clamp(40px,4.5vw,64px)">
+        <p style="margin:0;font-size:15.5px;line-height:1.68;color:#B5CBD1">Our long-term vision is to develop FEROKINZA into a global European sourcing and procurement platform, where businesses can access reliable European products regardless of their location or order size.</p>
+        <p style="margin:0;font-size:15.5px;line-height:1.68;color:#B5CBD1">We aim to combine technology, international supplier networks, dedicated procurement expertise and efficient logistics to make global sourcing simpler, faster and more cost-effective.</p>
+        <p style="margin:0;font-size:15.5px;line-height:1.68;color:#B5CBD1">From small batches to full containers, from a single requirement to long-term supply partnerships, we are building a smarter connection between European supply and global demand.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="background:#EDE1D1;padding:clamp(72px,8vw,124px) clamp(18px,4vw,44px)">
+    <div style="max-width:980px;margin:0 auto">
+      <div style="font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#B85C38;margin-bottom:18px">Questions</div>
+      <h2 style="margin:0 0 clamp(32px,4vw,52px);font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(30px,3.8vw,50px);line-height:1.08;letter-spacing:-.02em;color:#10333C">Before you send an enquiry</h2>
+      <details style="border-top:1px solid #D6C4AB;padding:22px 0" open="{{ true }}">
+        <summary style="display:flex;gap:20px;align-items:baseline;font-family:'Source Serif 4',serif;font-size:clamp(19px,1.7vw,23px);font-weight:600;color:#10333C">
+          <span style="color:#B85C38;font-size:13px;font-family:Archivo,sans-serif;font-weight:700">01</span>
+          <span>Do you accept small orders?</span>
+        </summary>
+        <p style="margin:14px 0 0 43px;font-size:15.5px;line-height:1.68;color:#4A5F62;max-width:44em">Yes. We support customers from small batches through to complete project requirements and full-container shipments. Small orders are part of the business model, not an exception we tolerate.</p>
+      </details>
+      <details style="border-top:1px solid #D6C4AB;padding:22px 0">
+        <summary style="display:flex;gap:20px;align-items:baseline;font-family:'Source Serif 4',serif;font-size:clamp(19px,1.7vw,23px);font-weight:600;color:#10333C">
+          <span style="color:#B85C38;font-size:13px;font-family:Archivo,sans-serif;font-weight:700">02</span>
+          <span>Do you only source from Europe?</span>
+        </summary>
+        <p style="margin:14px 0 0 43px;font-size:15.5px;line-height:1.68;color:#4A5F62;max-width:44em">European sourcing is our core strength, but we can arrange procurement from trusted sources across Europe and other global markets when that is the better answer for your specification or budget.</p>
+      </details>
+      <details style="border-top:1px solid #D6C4AB;padding:22px 0">
+        <summary style="display:flex;gap:20px;align-items:baseline;font-family:'Source Serif 4',serif;font-size:clamp(19px,1.7vw,23px);font-weight:600;color:#10333C">
+          <span style="color:#B85C38;font-size:13px;font-family:Archivo,sans-serif;font-weight:700">03</span>
+          <span>I only have a photo or an old part number. Can you still help?</span>
+        </summary>
+        <p style="margin:14px 0 0 43px;font-size:15.5px;line-height:1.68;color:#4A5F62;max-width:44em">Yes. Product identification is the first step of our process. Send whatever you have - a nameplate photograph, a drawing, a sample, a catalogue page - and we work back to the manufacturer and current reference.</p>
+      </details>
+      <details style="border-top:1px solid #D6C4AB;padding:22px 0">
+        <summary style="display:flex;gap:20px;align-items:baseline;font-family:'Source Serif 4',serif;font-size:clamp(19px,1.7vw,23px);font-weight:600;color:#10333C">
+          <span style="color:#B85C38;font-size:13px;font-family:Archivo,sans-serif;font-weight:700">04</span>
+          <span>What if the item is discontinued or out of budget?</span>
+        </summary>
+        <p style="margin:14px 0 0 43px;font-size:15.5px;line-height:1.68;color:#4A5F62;max-width:44em">We propose alternative product solutions: an equivalent from another European manufacturer, a superseded-to-current replacement, or a different specification that meets the same requirement. You decide which option to quote against.</p>
+      </details>
+      <details style="border-top:1px solid #D6C4AB;padding:22px 0">
+        <summary style="display:flex;gap:20px;align-items:baseline;font-family:'Source Serif 4',serif;font-size:clamp(19px,1.7vw,23px);font-weight:600;color:#10333C">
+          <span style="color:#B85C38;font-size:13px;font-family:Archivo,sans-serif;font-weight:700">05</span>
+          <span>Can you combine several suppliers into one shipment?</span>
+        </summary>
+        <p style="margin:14px 0 0 43px;font-size:15.5px;line-height:1.68;color:#4A5F62;max-width:44em">Yes. Consolidating goods from multiple European suppliers into a single consignment is one of the main reasons customers use us - one order, one shipment, one set of documents.</p>
+      </details>
+      <details style="border-top:1px solid #D6C4AB;padding:22px 0">
+        <summary style="display:flex;gap:20px;align-items:baseline;font-family:'Source Serif 4',serif;font-size:clamp(19px,1.7vw,23px);font-weight:600;color:#10333C">
+          <span style="color:#B85C38;font-size:13px;font-family:Archivo,sans-serif;font-weight:700">06</span>
+          <span>How long does a quotation take?</span>
+        </summary>
+        <p style="margin:14px 0 0 43px;font-size:15.5px;line-height:1.68;color:#4A5F62;max-width:44em">It depends on the product and how quickly the supplier responds. We acknowledge every enquiry, tell you what additional information we need, and keep you informed while the sourcing is in progress.</p>
+      </details>
+      <details style="border-top:1px solid #D6C4AB;padding:22px 0">
+        <summary style="display:flex;gap:20px;align-items:baseline;font-family:'Source Serif 4',serif;font-size:clamp(19px,1.7vw,23px);font-weight:600;color:#10333C">
+          <span style="color:#B85C38;font-size:13px;font-family:Archivo,sans-serif;font-weight:700">07</span>
+          <span>Can you handle large-scale and full-container requirements?</span>
+        </summary>
+        <p style="margin:14px 0 0 43px;font-size:15.5px;line-height:1.68;color:#4A5F62;max-width:44em">Yes. Complete project lists, BOQ packages, bulk industrial supplies and full-container shipments are all part of the business. Larger requirements are quoted line by line, planned against your delivery schedule and shipped as one coordinated consignment.</p>
+      </details>
+      <details style="border-top:1px solid #D6C4AB;border-bottom:1px solid #D6C4AB;padding:22px 0">
+        <summary style="display:flex;gap:20px;align-items:baseline;font-family:'Source Serif 4',serif;font-size:clamp(19px,1.7vw,23px);font-weight:600;color:#10333C">
+          <span style="color:#B85C38;font-size:13px;font-family:Archivo,sans-serif;font-weight:700">08</span>
+          <span>Can you support ongoing supply, not just one-off orders?</span>
+        </summary>
+        <p style="margin:14px 0 0 43px;font-size:15.5px;line-height:1.68;color:#4A5F62;max-width:44em">Yes. Many customers move from a first enquiry to repeat supply: recurring MRO and spare-part lists, scheduled replenishment and framework pricing on the items you buy regularly. Once your requirements are known, repeat orders are faster to quote and easier to plan.</p>
+      </details>
+    </div>
+  </section>
+
+  <section id="contact" style="padding:clamp(72px,8vw,124px) clamp(18px,4vw,44px)">
+    <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(36px,5vw,80px);align-items:start">
+      <div>
+        <div style="font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#B85C38;margin-bottom:18px">Contact</div>
+        <h2 style="margin:0;font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(30px,3.8vw,50px);line-height:1.08;letter-spacing:-.02em;color:#10333C">Tell us what you need</h2>
+        <p style="margin:22px 0 36px;font-size:15.5px;line-height:1.68;color:#3C5257;max-width:34em">One line or a full requirement list - both are welcome. Include the destination country and the quantity if you know them, and attach any references when you write to us by email.</p>
+        <div style="display:grid;gap:26px">
+          <div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Email</div>
+            <a href="mailto:admin@ferokinza.com" style="font-family:'Source Serif 4',serif;font-size:clamp(20px,1.9vw,26px);font-weight:600;color:#1D4A57" style-hover="color:#B85C38">info@ferokinza.com</a>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Telephone</div>
+            <a href="tel:+393516199605" style="font-family:'Source Serif 4',serif;font-size:clamp(20px,1.9vw,26px);font-weight:600;color:#1D4A57" style-hover="color:#B85C38">+39 351 619 9605</a>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Office</div>
+            <div style="font-size:16px;line-height:1.6;color:#3C5257">FEROKINZA EXPORT &amp; IMPORT<br>Via Copernico, 38<br>20125 Milano MI, Italy</div>
+          </div>
+          <sc-if value="{{ hasWhatsapp }}">
+            <a href="{{ whatsappHref }}" target="_blank" rel="noreferrer" style="justify-self:start;border:1px solid #1D4A57;color:#1D4A57;padding:14px 26px;border-radius:2px;font-size:14.5px;font-weight:600;transition:all .2s ease" style-hover="background:#1D4A57;color:#FAF6F0">Message us on WhatsApp</a>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="background:#FFFDFA;border:1px solid #E6DACA;padding:clamp(26px,3vw,40px)">
+        <sc-if value="{{ sent }}">
+          <div style="padding:20px 0">
+            <div style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:600;color:#1D4A57;margin-bottom:12px">Thank you — your message is ready to send.</div>
+            <p style="margin:0 0 22px;font-size:15px;line-height:1.65;color:#5A6E70">Your email client should have opened with the details filled in. If it did not, write to us directly at <a href="mailto:admin@ferokinza.com" style="color:#B85C38;font-weight:600">admin@ferokinza.com</a>.</p>
+            <button type="button" onClick="{{ reset }}" style="background:none;border:1px solid #1D4A57;color:#1D4A57;padding:12px 22px;border-radius:2px;font-size:14px;font-weight:600;cursor:pointer">Write another message</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;gap:4px;background:#F1E7DA;border:1px solid #E6DACA;border-radius:3px;padding:4px;margin-bottom:26px">
+            <button type="button" onClick="{{ tabBasic }}" style="{{ tabBasicStyle }}">Contact us</button>
+            <button type="button" onClick="{{ tabRfq }}" style="{{ tabRfqStyle }}">Request a quotation</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ showBasic }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submit }}">
+            <div style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;color:#10333C;margin-bottom:6px">Send an enquiry</div>
+            <div style="font-size:13.5px;color:#7A8B8C;margin-bottom:26px">A general question, an introduction, or anything you are not ready to quantify yet.</div>
+            <div style="display:grid;gap:18px">
+              <label style="display:block">
+                <span style="display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Name</span>
+                <input type="text" required="{{ true }}" value="{{ name }}" onChange="{{ onName }}" placeholder="Your full name" style="width:100%;padding:13px 14px;border:1px solid #DCCFBC;background:#FAF6F0;font-size:15px;color:#10333C;border-radius:2px;outline:none" style-focus="border-color:#1D4A57">
+              </label>
+              <label style="display:block">
+                <span style="display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Email</span>
+                <input type="email" required="{{ true }}" value="{{ email }}" onChange="{{ onEmail }}" placeholder="name@company.com" style="width:100%;padding:13px 14px;border:1px solid #DCCFBC;background:#FAF6F0;font-size:15px;color:#10333C;border-radius:2px;outline:none" style-focus="border-color:#1D4A57">
+              </label>
+              <label style="display:block">
+                <span style="display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Message</span>
+                <textarea required="{{ true }}" rows="6" value="{{ message }}" onChange="{{ onMessage }}" placeholder="What do you need, how many, and where should it be delivered?" style="width:100%;padding:13px 14px;border:1px solid #DCCFBC;background:#FAF6F0;font-size:15px;line-height:1.55;color:#10333C;border-radius:2px;outline:none;resize:vertical" style-focus="border-color:#1D4A57"></textarea>
+              </label>
+              <button type="submit" style="background:#1D4A57;color:#FAF6F0;border:none;padding:16px 28px;border-radius:2px;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s ease" style-hover="background:#B85C38">Send enquiry</button>
+              <div style="font-size:12.5px;line-height:1.55;color:#98A6A6">Submitting opens your email client with the message pre-filled, addressed to admin@ferokinza.com.</div>
+            </div>
+          </form>
+        </sc-if>
+        <sc-if value="{{ showRfq }}">
+          <form onSubmit="{{ submitRfq }}">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+              <div style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;color:#10333C">Request for quotation</div>
+              <span style="background:#B85C38;color:#FFF;font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px 9px">Priority</span>
+            </div>
+            <div style="font-size:13.5px;color:#7A8B8C;margin-bottom:26px">Complete requirements go straight to the procurement desk and are actioned first.</div>
+            <div style="display:grid;gap:18px">
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px">
+                <label style="display:block">
+                  <span style="display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Name</span>
+                  <input type="text" required="{{ true }}" value="{{ rName }}" onChange="{{ onRName }}" placeholder="Your full name" style="width:100%;padding:13px 14px;border:1px solid #DCCFBC;background:#FAF6F0;font-size:15px;color:#10333C;border-radius:2px;outline:none" style-focus="border-color:#1D4A57">
+                </label>
+                <label style="display:block">
+                  <span style="display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Company</span>
+                  <input type="text" value="{{ rCompany }}" onChange="{{ onRCompany }}" placeholder="Company name" style="width:100%;padding:13px 14px;border:1px solid #DCCFBC;background:#FAF6F0;font-size:15px;color:#10333C;border-radius:2px;outline:none" style-focus="border-color:#1D4A57">
+                </label>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px">
+                <label style="display:block">
+                  <span style="display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Email</span>
+                  <input type="email" required="{{ true }}" value="{{ rEmail }}" onChange="{{ onREmail }}" placeholder="name@company.com" style="width:100%;padding:13px 14px;border:1px solid #DCCFBC;background:#FAF6F0;font-size:15px;color:#10333C;border-radius:2px;outline:none" style-focus="border-color:#1D4A57">
+                </label>
+                <label style="display:block">
+                  <span style="display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Phone / WhatsApp</span>
+                  <input type="tel" value="{{ rPhone }}" onChange="{{ onRPhone }}" placeholder="Including country code" style="width:100%;padding:13px 14px;border:1px solid #DCCFBC;background:#FAF6F0;font-size:15px;color:#10333C;border-radius:2px;outline:none" style-focus="border-color:#1D4A57">
+                </label>
+              </div>
+              <label style="display:block">
+                <span style="display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Products &amp; specifications</span>
+                <textarea required="{{ true }}" rows="5" value="{{ rProduct }}" onChange="{{ onRProduct }}" placeholder="Product names, brands, part numbers or a description. Paste a list if you have one." style="width:100%;padding:13px 14px;border:1px solid #DCCFBC;background:#FAF6F0;font-size:15px;line-height:1.55;color:#10333C;border-radius:2px;outline:none;resize:vertical" style-focus="border-color:#1D4A57"></textarea>
+              </label>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px">
+                <label style="display:block">
+                  <span style="display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Quantity</span>
+                  <input type="text" required="{{ true }}" value="{{ rQty }}" onChange="{{ onRQty }}" placeholder="e.g. 20 pcs, 3 pallets, 1x40ft" style="width:100%;padding:13px 14px;border:1px solid #DCCFBC;background:#FAF6F0;font-size:15px;color:#10333C;border-radius:2px;outline:none" style-focus="border-color:#1D4A57">
+                </label>
+                <label style="display:block">
+                  <span style="display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Destination country</span>
+                  <input type="text" required="{{ true }}" value="{{ rCountry }}" onChange="{{ onRCountry }}" placeholder="Where should it be delivered?" style="width:100%;padding:13px 14px;border:1px solid #DCCFBC;background:#FAF6F0;font-size:15px;color:#10333C;border-radius:2px;outline:none" style-focus="border-color:#1D4A57">
+                </label>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px">
+                <label style="display:block">
+                  <span style="display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Preferred Incoterm</span>
+                  <select value="{{ rIncoterm }}" onChange="{{ onRIncoterm }}" style="width:100%;padding:13px 14px;border:1px solid #DCCFBC;background:#FAF6F0;font-size:15px;color:#10333C;border-radius:2px;outline:none" style-focus="border-color:#1D4A57">
+                    <option value="">Not sure — advise me</option>
+                    <option value="EXW">EXW</option>
+                    <option value="FCA">FCA</option>
+                    <option value="FOB">FOB</option>
+                    <option value="CIF">CIF</option>
+                    <option value="CIP">CIP</option>
+                    <option value="DAP">DAP</option>
+                    <option value="DDP">DDP</option>
+                  </select>
+                </label>
+                <label style="display:block">
+                  <span style="display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A7B68;margin-bottom:8px">Required by</span>
+                  <input type="date" value="{{ rDate }}" onChange="{{ onRDate }}" style="width:100%;padding:12px 14px;border:1px solid #DCCFBC;background:#FAF6F0;font-size:15px;color:#10333C;border-radius:2px;outline:none" style-focus="border-color:#1D4A57">
+                </label>
+              </div>
+              <button type="submit" style="background:#B85C38;color:#FFF;border:none;padding:16px 28px;border-radius:2px;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s ease" style-hover="background:#1D4A57">Submit RFQ</button>
+              <div style="font-size:12.5px;line-height:1.55;color:#98A6A6">Submitting opens your email client with the RFQ pre-filled, addressed to admin@ferokinza.com. Attach drawings, photos or a BOQ to that email if you have them.</div>
+            </div>
+          </form>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#10333C;color:#9FB8BF;padding:clamp(48px,5vw,72px) clamp(18px,4vw,44px) 32px">
+    <div style="max-width:1280px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:clamp(28px,3.5vw,56px);align-items:start">
+        <div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+            <img src="assets/ferokinza-emblem.png" alt="FEROKINZA emblem" style="width:46px;height:46px;object-fit:cover;border-radius:50%">
+            <span style="display:flex;flex-direction:column;line-height:1">
+              <span style="font-family:'Source Serif 4',serif;font-weight:700;font-size:21px;letter-spacing:.06em;color:#FAF6F0">FEROKINZA</span>
+              <span style="font-size:8.5px;font-weight:600;letter-spacing:.2em;color:#7E979D;margin-top:5px">EXPORT AND IMPORT COMPANY</span>
+            </span>
+          </div>
+          <p style="margin:0;font-size:14px;line-height:1.6;max-width:26em">Italy-based international sourcing, procurement and export. Connecting businesses worldwide with reliable European products and supply solutions.</p>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#5F7E85;margin-bottom:16px">Company</div>
+          <div style="display:grid;gap:10px;font-size:14.5px">
+            <a href="#services" style="color:#C5D6DA">Services</a>
+            <a href="#sectors" style="color:#C5D6DA">What we source</a>
+            <a href="#process" style="color:#C5D6DA">How it works</a>
+            <a href="#logistics" style="color:#C5D6DA">Logistics &amp; Incoterms</a>
+            <a href="#documentation" style="color:#C5D6DA">Compliance</a>
+            <a href="#suppliers" style="color:#C5D6DA">For suppliers &amp; brands</a>
+            <a href="#vision" style="color:#C5D6DA">Our vision</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#5F7E85;margin-bottom:16px">Markets</div>
+          <div style="display:grid;gap:10px;font-size:14.5px;color:#C5D6DA">
+            <span>Europe</span><span>GCC</span><span>India</span><span>Asia</span><span>Australia</span><span>Africa</span><span>China</span><span>USA</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#5F7E85;margin-bottom:16px">Get in touch</div>
+          <div style="display:grid;gap:10px;font-size:14.5px;color:#C5D6DA">
+            <a href="mailto:admin@ferokinza.com" style="color:#C5D6DA">info@ferokinza.com</a>
+            <a href="tel:+393516199605" style="color:#C5D6DA">+39 351 619 9605</a>
+            <span style="line-height:1.55">Via Copernico, 38<br>20125 Milano MI, Italy</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:clamp(36px,4vw,56px);padding-top:24px;border-top:1px solid rgba(159,184,191,.22);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;font-size:12.5px;color:#6E8B92">
+        <span>© {{ year }} FEROKINZA EXPORT &amp; IMPORT. All rights reserved.</span>
+        <span>Milano, Italy · Sourcing worldwide · Incoterms® is a trademark of the International Chamber of Commerce</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact&quot;},&quot;showStats&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showIncoterms&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;}}">
+class Component extends DCLogic {
+  state = {
+    name: '', email: '', message: '', sent: false, narrow: false, menu: false,
+    tab: 'basic',
+    rName: '', rCompany: '', rEmail: '', rPhone: '', rCountry: '',
+    rProduct: '', rQty: '', rIncoterm: '', rDate: ''
+  };
+
+  field(key) { return (e) => this.setState({ [key]: e.target.value }); }
+
+  componentDidMount() {
+    this._onResize = () => {
+      const n = window.innerWidth < 1000;
+      if (n !== this.state.narrow) this.setState({ narrow: n, menu: false });
+    };
+    this._onResize();
+    window.addEventListener('resize', this._onResize);
+  }
+
+  componentWillUnmount() { window.removeEventListener('resize', this._onResize); }
+
+  renderVals() {
+    const wa = (this.props.whatsappNumber || '').replace(/[^0-9]/g, '');
+    return {
+      year: new Date().getFullYear(),
+      wide: !this.state.narrow,
+      narrow: this.state.narrow,
+      menuOpen: this.state.narrow && this.state.menu,
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+      showStats: this.props.showStats ?? true,
+      showIncoterms: this.props.showIncoterms ?? true,
+      hasWhatsapp: wa.length > 6,
+      whatsappHref: 'https://wa.me/' + wa,
+      name: this.state.name,
+      email: this.state.email,
+      message: this.state.message,
+      sent: this.state.sent,
+      notSent: !this.state.sent,
+      onName: (e) => this.setState({ name: e.target.value }),
+      onEmail: (e) => this.setState({ email: e.target.value }),
+      onMessage: (e) => this.setState({ message: e.target.value }),
+      reset: () => this.setState({
+        sent: false, name: '', email: '', message: '',
+        rName: '', rCompany: '', rEmail: '', rPhone: '', rCountry: '',
+        rProduct: '', rQty: '', rIncoterm: '', rDate: ''
+      }),
+      isBasic: this.state.tab === 'basic',
+      isRfq: this.state.tab === 'rfq',
+      showBasic: !this.state.sent && this.state.tab === 'basic',
+      showRfq: !this.state.sent && this.state.tab === 'rfq',
+      tabBasic: () => this.setState({ tab: 'basic' }),
+      tabRfq: () => this.setState({ tab: 'rfq' }),
+      tabBasicStyle: this.state.tab === 'basic'
+        ? 'flex:1;padding:14px 12px;border:none;background:#1D4A57;color:#FAF6F0;font-size:14px;font-weight:600;cursor:pointer;border-radius:2px'
+        : 'flex:1;padding:14px 12px;border:none;background:transparent;color:#5A6E70;font-size:14px;font-weight:600;cursor:pointer;border-radius:2px',
+      tabRfqStyle: this.state.tab === 'rfq'
+        ? 'flex:1;padding:14px 12px;border:none;background:#1D4A57;color:#FAF6F0;font-size:14px;font-weight:600;cursor:pointer;border-radius:2px'
+        : 'flex:1;padding:14px 12px;border:none;background:transparent;color:#5A6E70;font-size:14px;font-weight:600;cursor:pointer;border-radius:2px',
+      rName: this.state.rName, rCompany: this.state.rCompany, rEmail: this.state.rEmail,
+      rPhone: this.state.rPhone, rCountry: this.state.rCountry, rProduct: this.state.rProduct,
+      rQty: this.state.rQty, rIncoterm: this.state.rIncoterm, rDate: this.state.rDate,
+      onRName: this.field('rName'), onRCompany: this.field('rCompany'),
+      onREmail: this.field('rEmail'), onRPhone: this.field('rPhone'),
+      onRCountry: this.field('rCountry'), onRProduct: this.field('rProduct'),
+      onRQty: this.field('rQty'), onRIncoterm: this.field('rIncoterm'),
+      onRDate: this.field('rDate'),
+      submitRfq: (e) => {
+        e.preventDefault();
+        const s = this.state;
+        const body = [
+          'REQUEST FOR QUOTATION',
+          '',
+          'Contact: ' + s.rName,
+          'Company: ' + s.rCompany,
+          'Email: ' + s.rEmail,
+          'Phone / WhatsApp: ' + s.rPhone,
+          'Destination country: ' + s.rCountry,
+          'Quantity: ' + s.rQty,
+          'Preferred Incoterm: ' + (s.rIncoterm || 'Not specified'),
+          'Required by: ' + (s.rDate || 'Not specified'),
+          '',
+          'Products / specifications:',
+          s.rProduct
+        ].join('\n');
+        const href = 'mailto:admin@ferokinza.com?subject=' +
+          encodeURIComponent('RFQ — ' + (s.rCompany || s.rName || 'website')) +
+          '&body=' + encodeURIComponent(body);
+        try { window.location.href = href; } catch (err) { /* no mail client */ }
+        this.setState({ sent: true });
+      },
+      submit: (e) => {
+        e.preventDefault();
+        const { name, email, message } = this.state;
+        const body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
+        const href = 'mailto:admin@ferokinza.com?subject=' +
+          encodeURIComponent('Sourcing enquiry — ' + (name || 'website')) +
+          '&body=' + encodeURIComponent(body);
+        try { window.location.href = href; } catch (err) { /* no mail client */ }
+        this.setState({ sent: true });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

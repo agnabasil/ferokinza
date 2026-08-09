@@ -1,0 +1,12 @@
+# Local tooling
+.claude/
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+._*
+
+# Scratch files used while testing the page locally
+_*.html
+!_config.yml

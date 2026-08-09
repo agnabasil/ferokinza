@@ -1,0 +1,15 @@
+# GitHub Pages configuration.
+#
+# Pages publishes every file in the repository by default. These entries keep
+# the source material in the repo but out of the live site, so nothing here is
+# reachable at ferokinza.com.
+#
+# index.html and assets/ are deliberately not listed — they are the site.
+
+exclude:
+  - README.md
+  - rough_docs.txt
+  - design-source.dc.html   # design prototype, needs the two scripts below
+  - support.js
+  - image-slot.js
+  - apps-script/            # Google Apps Script backend + its docs
