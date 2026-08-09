@@ -11,6 +11,20 @@ format). It needs `support.js` and `image-slot.js` to open in a browser and is k
 for reference only — it is **not** what ships. The navy/gold and white/gold design
 variants were dropped.
 
+`maintenance.html` is the "We're rebuilding our site" page that ran at
+ferokinza.com before this one. It is kept as a standby and is self-contained, so
+it works anywhere. To put it back up during downtime:
+
+```sh
+cp index.html live.html.bak    # keep the real site
+cp maintenance.html index.html
+git commit -am "Show maintenance page" && git push
+```
+
+Reverse it with `cp live.html.bak index.html`. Note it still lists
+**admin@ferokinza.com**, not the `info@` address the current site uses — update
+that before putting it live.
+
 Both forms post to a Google Apps Script Web App that writes each submission to its
 own sheet — **Contact us → `Contact`**, **Request a quotation → `RFQ`**. The script
 and its one-time setup steps are in [`apps-script/`](apps-script/README.md). Paste

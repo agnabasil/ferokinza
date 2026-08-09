@@ -13,3 +13,4 @@ exclude:
   - support.js
   - image-slot.js
   - apps-script/            # Google Apps Script backend + its docs
+  - maintenance.html        # standby page, see README before putting it live
