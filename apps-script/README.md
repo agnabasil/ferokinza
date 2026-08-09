@@ -131,6 +131,28 @@ Rejections come back as `{"ok":false,"code":"validation","error":"…"}` and the
 page shows the message against the form without offering the email fallback —
 the input is the problem, not the connection.
 
+## Notifications not arriving
+
+Rows still land in the sheet when mail fails - the send is wrapped so a failed
+notification never costs you the submission. That also means failures are
+silent, so check for them deliberately.
+
+1. In the Apps Script editor, select `checkEmailSetup` from the function
+   dropdown and press **Run**. It prints which account the script sends as,
+   where notifications go, and the remaining daily quota, then sends one test
+   message.
+2. Open **Executions** in the left sidebar. Every real submission logs either
+   `notified <address> (quota left: N)` or `notify failed for <address>: ...`.
+
+Common causes, in the order worth checking:
+
+| Cause | How it shows |
+| --- | --- |
+| The address is not a real mailbox | `checkEmailSetup` reports success but nothing arrives. An alias that forwards nowhere, or a domain address never created in Workspace, both behave this way. The site previously used `admin@ferokinza.com` - confirm which of the two actually receives mail. |
+| Filtered as spam | Message is in the spam folder, especially when the script account and the recipient are the same address. |
+| Daily quota exhausted | `getRemainingDailyQuota` reports 0. Consumer accounts get 100 recipients per day, Workspace 1,500. |
+| `NOTIFY_EMAIL` left blank | Nothing is ever sent, and the execution log stays quiet. |
+
 ## Notes and limits
 
 - Spam control is the honeypot, the origin allowlist and the content rules

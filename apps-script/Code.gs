@@ -270,17 +270,54 @@ function notify(config, values) {
   var who = values.name || values.rName || values.rCompany || 'website';
   var replyTo = values.email || values.rEmail || '';
 
+  // Build the options without undefined keys - MailApp rejects some of those.
+  var options = {
+    to: NOTIFY_EMAIL,
+    subject: config.label + ' — ' + who,
+    body: lines.join('\n'),
+    name: 'FEROKINZA website'
+  };
+
+  if (replyTo) options.replyTo = replyTo;
+
+  try {
+    MailApp.sendEmail(options);
+    console.log('notified ' + NOTIFY_EMAIL + ' (quota left: ' +
+      MailApp.getRemainingDailyQuota() + ')');
+  } catch (err) {
+    // A failed notification must never lose the row already written.
+    console.error('notify failed for ' + NOTIFY_EMAIL + ': ' + err);
+  }
+}
+
+/**
+ * Run this from the Apps Script editor (select it, press Run) when
+ * notifications are not arriving. Everything it finds is printed to the
+ * execution log, and it sends one test message to NOTIFY_EMAIL.
+ */
+function checkEmailSetup() {
+  console.log('Script runs as:      ' + Session.getEffectiveUser().getEmail());
+  console.log('Notifications go to: ' + (NOTIFY_EMAIL || '(disabled)'));
+  console.log('Emails left today:   ' + MailApp.getRemainingDailyQuota());
+
+  if (!NOTIFY_EMAIL) {
+    console.log('NOTIFY_EMAIL is empty, so nothing would ever be sent.');
+    return;
+  }
+
   try {
     MailApp.sendEmail({
       to: NOTIFY_EMAIL,
-      subject: config.label + ' — ' + who,
-      body: lines.join('\n'),
-      replyTo: replyTo || undefined,
+      subject: 'FEROKINZA test notification',
+      body: 'If you are reading this, MailApp works and ' + NOTIFY_EMAIL +
+            ' receives mail from this script.',
       name: 'FEROKINZA website'
     });
+    console.log('Sent. If it does not arrive, check spam, then confirm that ' +
+                NOTIFY_EMAIL + ' is a real mailbox and not just an alias or a ' +
+                'forwarding address that drops mail.');
   } catch (err) {
-    // A failed notification must never lose the row already written.
-    console.error('notify failed: ' + err);
+    console.error('MailApp refused it: ' + err);
   }
 }
 
